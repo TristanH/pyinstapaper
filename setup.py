@@ -27,8 +27,8 @@ test_requirements = [
 ]
 
 setup(
-    name='pyinstapaper',
-    version='0.1.0',
+    name='readwise-pyinstapaper',
+    version='0.1.1',
     description="A Python wrapper for the full Instapaper API.",
     long_description=readme + '\n\n' + history,
     author="Matt Dorn",
