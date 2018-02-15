@@ -95,7 +95,7 @@ class Instapaper(object):
             'data': data
         }
 
-    def get_bookmarks(self, folder='unread', limit=10):
+    def get_bookmarks(self, folder='unread', limit=10, have=[]):
         """Return list of user's bookmarks.
 
         :param str folder: Optional. Possible values are unread (default),
@@ -105,7 +105,7 @@ class Instapaper(object):
         :rtype: list
         """
         path = 'bookmarks/list'
-        response = self.request(path, {'folder_id': folder, 'limit': limit})
+        response = self.request(path, {'folder_id': folder, 'limit': limit, 'have': have})
         items = response['data']
         bookmarks = []
         for item in items:
