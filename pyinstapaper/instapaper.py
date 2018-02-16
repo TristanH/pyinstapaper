@@ -31,6 +31,9 @@ class Instapaper(object):
         self.oauth_client = oauth.Client(self.consumer)
         self.token = None
 
+    def from_token(self, token_string):
+        self.token = oauth.Token.from_string(token_string)
+
     def login(self, username, password):
         '''Authenticate using XAuth variant of OAuth.
 
