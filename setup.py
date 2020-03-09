@@ -25,9 +25,6 @@ setup_requirements = ['pytest-runner', ]
 test_requirements = ['pytest', ]
 
 setup(
-    name='readwise-pyinstapaper',
-    version='0.2.2',
-    long_description=readme + '\n\n' + history,
     author="Matt Dorn",
     author_email='matt.dorn@gmail.com',
     classifiers=[
@@ -50,12 +47,15 @@ setup(
     },
     install_requires=requirements,
     license="MIT license",
+    long_description=readme + '\n\n' + history,
     include_package_data=True,
     keywords='pyinstapaper',
+    name='readwise-pyinstapaper',
     packages=find_packages(include=['pyinstapaper']),
     setup_requires=setup_requirements,
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/mdorn/pyinstapaper',
+    version='0.2.2',
     zip_safe=False,
 )

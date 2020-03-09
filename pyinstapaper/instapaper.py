@@ -110,7 +110,7 @@ class Instapaper(object):
         :rtype: list
         """
         path = 'bookmarks/list'
-        params = {'folder_id': folder, 'limit': limit, 'have': have}
+        params = {'folder_id': folder, 'limit': limit}
         if have:
             have_concat = ','.join(str(id_) for id_ in have)
             params['have'] = have_concat
