@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-
 from datetime import datetime
 
 import json
 import logging
 import time
-import urlparse
-from urllib import urlencode
 
 import oauth2 as oauth
+
+# for python2/3 compat
+from future.moves.urllib.parse import urlencode, parse_qsl
 
 BASE_URL = 'https://www.instapaper.com'
 API_VERSION = '1'
@@ -50,7 +50,7 @@ class Instapaper(object):
             },
             returns_json=False
         )
-        token = dict(urlparse.parse_qsl(response['data']))
+        token = dict(parse_qsl(response['data'].decode()))
         self.token = oauth.Token(
             token['oauth_token'], token['oauth_token_secret'])
         self.oauth_client = oauth.Client(self.consumer, self.token)
@@ -99,17 +99,22 @@ class Instapaper(object):
             'data': data
         }
 
-    def get_bookmarks(self, folder='unread', limit=10, have=[]):
+    def get_bookmarks(self, folder='unread', limit=25, have=None):
         """Return list of user's bookmarks.
 
         :param str folder: Optional. Possible values are unread (default),
             starred, archive, or a folder_id value.
         :param int limit: Optional. A number between 1 and 500, default 25.
+        :param list have: Optional. A list of IDs to exclude from results
         :returns: List of user's bookmarks
         :rtype: list
         """
         path = 'bookmarks/list'
-        response = self.request(path, {'folder_id': folder, 'limit': limit, 'have': have})
+        params = {'folder_id': folder, 'limit': limit, 'have': have}
+        if have:
+            have_concat = ','.join(str(id_) for id_ in have)
+            params['have'] = have_concat
+        response = self.request(path, params)
         items = response['data']
         bookmarks = []
         for item in items:
@@ -163,7 +168,11 @@ class InstapaperObject(object):
         for action in self.SIMPLE_ACTIONS:
             setattr(self, action, lambda x: self._simple_action(x))
             instance_method = getattr(self, action)
-            instance_method.func_defaults = (action,)
+            try:
+                instance_method.__defaults__ = (action,)
+            except AttributeError:
+                # ugh, for py2.7 compat
+                instance_method.func_defaults = (action,)
 
     def add(self):
         '''Save an object to Instapaper after instantiating it.
