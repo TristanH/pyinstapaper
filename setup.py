@@ -8,14 +8,12 @@ from setuptools import setup, find_packages
 with open('README.rst') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read()
 
 # requirements = ['Click>=6.0', ]
 requirements = [
     'future',
     'httplib2>=0.9',
-    'lxml>=3.4,<=4',
+    'lxml>=4',
     'oauth2>=1.9,<2',
     'requests>=2.7,<3',
 ]
@@ -47,7 +45,7 @@ setup(
     },
     install_requires=requirements,
     license="MIT license",
-    long_description=readme + '\n\n' + history,
+    long_description=readme,
     include_package_data=True,
     keywords='pyinstapaper',
     name='readwise-pyinstapaper',
@@ -56,6 +54,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/mdorn/pyinstapaper',
-    version='0.2.2',
+    version='0.2.3',
     zip_safe=False,
 )
